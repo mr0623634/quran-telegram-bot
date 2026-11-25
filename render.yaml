@@ -1,12 +1,12 @@
-# بديل: النشر على Render (مجاني) — خدمة Worker شغالة 24 ساعة
-# من لوحة Render: New + → Background Worker → اربط مستودع GitHub فيه الملفات دي
-# وحط متغير البيئة TELEGRAM_BOT_TOKEN
+# النشر على Render — خدمة ويب مجانية (Webhook)
+# الخطة المجانية: الخدمة بتنام بعد 15 دقيقة من غير طلبات وبتصحى لما ييجي طلب جديد
 services:
-  - type: worker
+  - type: web
     name: quran-telegram-bot
     env: python
+    plan: free
     buildCommand: pip install -r requirements.txt
-    startCommand: python main_polling.py
+    startCommand: gunicorn --bind 0.0.0.0:$PORT api.index:app
     envVars:
       - key: TELEGRAM_BOT_TOKEN
         sync: false
